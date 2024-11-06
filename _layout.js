@@ -7,7 +7,7 @@ export default function Layout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="login" options={{ title: 'LOG IN' }} />
       <Stack.Screen name="signup" options={{ title: 'SIGN UP' }} />
-      {/* Add more screens as needed */}
+      <Stack.Screen name="dashboard" options={{ headerShown: false }} />
     </Stack>
   );
 }

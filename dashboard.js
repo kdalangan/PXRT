@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
+import { MaterialCommunityIcons } from 'react-native-vector-icons'; // For checkmark icon
 
 export default function Dashboard() {
   return (
@@ -22,9 +23,6 @@ export default function Dashboard() {
         <TouchableOpacity style={styles.tabButton}>
           <Text style={styles.tabText}>SIMULATION</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton}>
-          <Text style={styles.tabText}>SETTINGS</Text>
-        </TouchableOpacity>
       </View>
 
       {/* Scrollable Content */}
@@ -36,11 +34,15 @@ export default function Dashboard() {
         </View>
 
         <View style={styles.recentProjects}>
-          {/* Placeholder for recent projects - you can map through an array of projects */}
+          {/* Add more recent projects by adding additional ProjectCard components */}
           <ProjectCard status="in-progress" errors={3} />
           <ProjectCard status="in-progress" errors={4} />
           <ProjectCard status="complete" />
           <ProjectCard status="complete" />
+          <ProjectCard status="in-progress" errors={2} />
+          <ProjectCard status="complete" />
+          <ProjectCard status="in-progress" errors={1} />
+          <ProjectCard status="in-progress" errors={5} />
         </View>
       </ScrollView>
 
@@ -50,8 +52,8 @@ export default function Dashboard() {
           <Image source={require('../assets/notification.png')} style={styles.icon} />
           <Text style={styles.bottomText}>Notification</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomButton}>
-          <Image source={require('../assets/camera.png')} style={styles.icon} />
+        <TouchableOpacity style={styles.captureButton}>
+          <Image source={require('../assets/camera.png')} style={styles.captureIcon} />
           <Text style={styles.bottomText}>Capture</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton}>
@@ -68,9 +70,18 @@ function ProjectCard({ status, errors }) {
   return (
     <View style={styles.projectCard}>
       <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.projectImage} />
-      <Text style={styles.projectStatus}>
-        {status === 'in-progress' ? `${errors} errors detected\nIn progress` : 'Complete'}
-      </Text>
+      <View style={styles.projectStatusContainer}>
+        <Text style={styles.projectStatus}>
+          {status === 'in-progress' 
+            ? `${errors} errors detected`
+            : 'Complete'}
+        </Text>
+        {status === 'in-progress' ? (
+          <ActivityIndicator size="small" color="#0000ff" style={styles.loadingIndicator} />
+        ) : (
+          <MaterialCommunityIcons name="check-circle" size={20} color="green" style={styles.checkIcon} />
+        )}
+      </View>
     </View>
   );
 }
@@ -89,30 +100,35 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 30,
-    backgroundColor: '#FFD700', // Yellow header background
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    paddingTop: 80,
+    paddingBottom: 20,
+    backgroundColor: '#FFD700',
   },
   profileImage: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     borderRadius: 20,
+    marginLeft: 140,
   },
   greeting: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#000000',
+    marginRight: 10,
   },
   tabNavigation: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    backgroundColor: '#ffffff', // White background for tab navigation
+    justifyContent: 'center',  // Centers the buttons horizontally
+    paddingVertical: 15,
+    backgroundColor: '#ffffff',
   },
   tabButton: {
-    backgroundColor: '#D9D9D9', // Light gray background color
-    borderRadius: 20, // Rounded corners for the tab buttons
-    paddingHorizontal: 15,
-    paddingVertical: 8,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 1, // Add spacing between buttons
   },
   tabText: {
     fontWeight: 'bold',
@@ -133,48 +149,69 @@ const styles = StyleSheet.create({
   },
   viewAll: {
     fontSize: 14,
-    color: '#1E90FF',
+    color: '#000000',
   },
   recentProjects: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 15,
   },
   projectCard: {
     width: '48%',
     backgroundColor: '#FFD700',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginBottom: 10,
     alignItems: 'center',
   },
   projectImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
+    width: 150,
+    height: 150,
+    borderRadius: 20,
+  },
+  projectStatusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
   },
   projectStatus: {
     textAlign: 'center',
-    marginTop: 5,
+    marginRight: 5,
     fontSize: 12,
+  },
+  loadingIndicator: {
+    marginLeft: 5,
+  },
+  checkIcon: {
+    marginLeft: 5,
   },
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#D9D9D9',
-    paddingVertical: 10,
+    paddingVertical: 0,
   },
   bottomButton: {
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  captureButton: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingVertical: 30,
+  },
+  captureIcon: {
+    width: 75,
+    height: 75,
+    marginTop: -20,
   },
   icon: {
     width: 24,
     height: 24,
   },
   bottomText: {
-    fontSize: 12,
+    fontSize: 15,
   },
 });

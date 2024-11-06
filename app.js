@@ -22,14 +22,14 @@ export default function App() {
           name="signup" 
           component={SignUpScreen} 
           options={{
-            headerShown: false, // Hide the header for the SignUp Screen
+            headerShown: false, 
           }}
         />
         <Stack.Screen 
           name="dashboard" 
           component={Dashboard} 
           options={{
-            headerShown: false, // Hide the default header for Dashboard
+            headerShown: false, 
           }}
         />
       </Stack.Navigator>

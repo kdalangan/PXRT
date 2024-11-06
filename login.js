@@ -4,44 +4,58 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true); 
-  
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'LOG IN',
       headerStyle: {
-        backgroundColor: '#D9D9D9', 
-        height: 100, 
+        backgroundColor: '#D9D9D9',
+        height: 100,
       },
       headerTitleStyle: {
-        fontFamily: 'Poppins', 
-        color: '#000', 
-        paddingVertical: 10, 
+        fontFamily: 'Poppins',
+        color: '#000',
+        paddingVertical: 10,
       },
     });
   }, [navigation]);
 
   const togglePasswordVisibility = () => {
-    setIsPasswordVisible(prevState => !prevState); // Toggle password visibility
+    setIsPasswordVisible(prevState => !prevState);
+  };
+
+  const handleLogin = () => {
+    if (username && password) {
+      navigation.navigate('dashboard'); 
+    } else {
+      alert('Please enter both username and password');
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* App Logo */}
       <Image source={require('../assets/pcb.png')} style={styles.logo} />
-
-      {/* Input Fields */}
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <Image source={require('../assets/user.png')} style={styles.icon} />
-          <TextInput placeholder="username" style={styles.input} />
+          <TextInput 
+            placeholder="Username" 
+            style={styles.input} 
+            value={username} 
+            onChangeText={setUsername} 
+          />
         </View>
         <View style={styles.inputWrapper}>
           <Image source={require('../assets/password.png')} style={styles.icon} />
           <TextInput 
-            placeholder="password" 
+            placeholder="Password" 
             style={styles.input} 
-            secureTextEntry={!isPasswordVisible} // Toggle password visibility
+            secureTextEntry={!isPasswordVisible} 
+            value={password} 
+            onChangeText={setPassword} 
           />
           <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIconContainer}>
             <Image 
@@ -51,25 +65,19 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Sign In Button */}
-      <TouchableOpacity style={styles.signInButton}>
+      <TouchableOpacity style={styles.signInButton} onPress={handleLogin}>
         <Text style={styles.signInText}>SIGN IN</Text>
       </TouchableOpacity>
       <Text style={styles.forgotPassword}>Forgot Password?</Text>
-
-      {/* Sign Up Option */}
       <Text style={styles.signUpText}>
         DON’T HAVE AN ACCOUNT? 
         <Text 
           style={styles.signUpLink} 
-          onPress={() => navigation.navigate('signup')} // Navigate to SignUp screen
+          onPress={() => navigation.navigate('signup')}
         >
-            SIGN UP
+          SIGN UP
         </Text>
       </Text>
-
-      {/* Social Media Sign-In */}
       <Text style={styles.signUpUsing}>SIGN UP USING</Text>
       <View style={styles.socialIconsContainer}>
         <Image source={require('../assets/fb.png')} style={styles.icon} />
@@ -86,12 +94,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    paddingBottom: 20, 
+    paddingBottom: 20,
   },
   logo: {
-    width: 500, // Increased width
-    height: 400, // Increased height
-    marginBottom: -100, // Reduce space below the logo
+    width: 500,
+    height: 400,
+    marginBottom: -100,
   },
   inputContainer: {
     width: '70%',
@@ -105,17 +113,17 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   icon: {
-    width: 24, // Width of the icon
-    height: 24, // Height of the icon
-    marginRight: 10, // Space between the icon and the text input
+    width: 24,
+    height: 24,
+    marginRight: 10,
   },
   input: {
-    flex: 1, // Allow the TextInput to take remaining space
+    flex: 1,
     padding: 10,
   },
   eyeIconContainer: {
     padding: 10,
-    justifyContent: 'center', // Center the eye icon vertically
+    justifyContent: 'center',
   },
   eyeIcon: {
     width: 24,
@@ -145,9 +153,9 @@ const styles = StyleSheet.create({
   signUpLink: {
     color: 'red',
     fontWeight: 'bold',
-    marginLeft: 5,  // Add left margin for space from the previous text
-    marginRight: 5, // Add right margin for space from the next text
-    marginTop: 5,   // Add top margin for space above
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 5,
   },
   signUpUsing: {
     marginTop: 20,

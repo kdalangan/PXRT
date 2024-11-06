@@ -1,40 +1,46 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default function Dashboard() {
   return (
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
-        <Image source={require('../assets/profile.png')} style={styles.profileImage} />
         <Text style={styles.greeting}>Hello, User!</Text>
+        <Image source={require('../assets/profile.png')} style={styles.profileImage} />
+      </View>
+
+      {/* Tab Navigation */}
+      <View style={styles.tabNavigation}>
+        <TouchableOpacity style={styles.tabButton}>
+          <Text style={styles.tabText}>HOME</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabButton}>
+          <Text style={styles.tabText}>PROJECTS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabButton}>
+          <Text style={styles.tabText}>SIMULATION</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabButton}>
+          <Text style={styles.tabText}>SETTINGS</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Rounded Rectangles for Navigation */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.roundedButton}>
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.roundedButton}>
-            <Text style={styles.buttonText}>Simulation</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.roundedButton}>
-            <Text style={styles.buttonText}>Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.roundedButton}>
-            <Text style={styles.buttonText}>Projects</Text>
-          </TouchableOpacity>
+        {/* Recent Projects Section */}
+        <View style={styles.projectsHeader}>
+          <Text style={styles.recentProjectsHeader}>Recent Projects</Text>
+          <Text style={styles.viewAll}>View All</Text>
         </View>
 
-        {/* Recent Projects Section */}
-        <Text style={styles.recentProjectsHeader}>Recent Projects</Text>
         <View style={styles.recentProjects}>
-          {/* Placeholder for recent projects, you can map through an array of projects */}
-          <Text style={styles.projectItem}>Project 1</Text>
-          <Text style={styles.projectItem}>Project 2</Text>
-          <Text style={styles.projectItem}>Project 3</Text>
+          {/* Placeholder for recent projects - you can map through an array of projects */}
+          <ProjectCard status="in-progress" errors={3} />
+          <ProjectCard status="in-progress" errors={4} />
+          <ProjectCard status="complete" />
+          <ProjectCard status="complete" />
         </View>
       </ScrollView>
 
@@ -57,6 +63,24 @@ export default function Dashboard() {
   );
 }
 
+// Component for individual project cards
+function ProjectCard({ status, errors }) {
+  return (
+    <View style={styles.projectCard}>
+      <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.projectImage} />
+      <Text style={styles.projectStatus}>
+        {status === 'in-progress' ? `${errors} errors detected\nIn progress` : 'Complete'}
+      </Text>
+    </View>
+  );
+}
+
+// Define prop types for ProjectCard component
+ProjectCard.propTypes = {
+  status: PropTypes.string.isRequired,
+  errors: PropTypes.number,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -65,55 +89,75 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#D9D9D9',
+    padding: 30,
+    backgroundColor: '#FFD700', // Yellow header background
+    justifyContent: 'space-between',
   },
   profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   greeting: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
+  },
+  tabNavigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    backgroundColor: '#ffffff', // White background for tab navigation
+  },
+  tabButton: {
+    backgroundColor: '#D9D9D9', // Light gray background color
+    borderRadius: 20, // Rounded corners for the tab buttons
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+  },
+  tabText: {
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   scrollContainer: {
     padding: 20,
-    alignItems: 'center',
   },
-  buttonContainer: {
-    flexDirection: 'column',
+  projectsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-  },
-  roundedButton: {
-    backgroundColor: '#E0E0E0',
-    borderRadius: 20,
-    padding: 15,
-    marginVertical: 10,
-    width: '80%',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   recentProjectsHeader: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 20,
-    alignSelf: 'flex-start',
+  },
+  viewAll: {
+    fontSize: 14,
+    color: '#1E90FF',
   },
   recentProjects: {
-    width: '100%',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 10,
-    padding: 15,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
-  projectItem: {
-    paddingVertical: 10,
-    fontSize: 16,
+  projectCard: {
+    width: '48%',
+    backgroundColor: '#FFD700',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  projectImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  projectStatus: {
+    textAlign: 'center',
+    marginTop: 5,
+    fontSize: 12,
   },
   bottomNav: {
     flexDirection: 'row',

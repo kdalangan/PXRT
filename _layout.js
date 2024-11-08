@@ -1,4 +1,3 @@
-
 import { Stack } from 'expo-router';
 
 export default function Layout() {
@@ -8,6 +7,7 @@ export default function Layout() {
       <Stack.Screen name="login" options={{ title: 'LOG IN' }} />
       <Stack.Screen name="signup" options={{ title: 'SIGN UP' }} />
       <Stack.Screen name="dashboard" options={{ headerShown: false }} />
+      <Stack.Screen name="upload" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
-import { MaterialCommunityIcons } from 'react-native-vector-icons'; // For checkmark icon
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 
 export default function Dashboard() {
+  const navigation = useNavigation(); // Initialize navigation
+
   return (
     <View style={styles.container}>
       {/* Header Section */}
@@ -34,7 +37,6 @@ export default function Dashboard() {
         </View>
 
         <View style={styles.recentProjects}>
-          {/* Add more recent projects by adding additional ProjectCard components */}
           <ProjectCard status="in-progress" errors={3} />
           <ProjectCard status="in-progress" errors={4} />
           <ProjectCard status="complete" />
@@ -52,7 +54,10 @@ export default function Dashboard() {
           <Image source={require('../assets/notification.png')} style={styles.icon} />
           <Text style={styles.bottomText}>Notification</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.captureButton}>
+        <TouchableOpacity 
+          style={styles.captureButton}
+          onPress={() => navigation.navigate('upload')} // Navigate to upload screen
+        >
           <Image source={require('../assets/camera.png')} style={styles.captureIcon} />
           <Text style={styles.bottomText}>Capture</Text>
         </TouchableOpacity>
@@ -86,12 +91,12 @@ function ProjectCard({ status, errors }) {
   );
 }
 
-// Define prop types for ProjectCard component
 ProjectCard.propTypes = {
   status: PropTypes.string.isRequired,
   errors: PropTypes.number,
 };
 
+// Add your existing styles here
 const styles = StyleSheet.create({
   container: {
     flex: 1,

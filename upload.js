@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
   uploadButton: {
     backgroundColor: '#FFD700',
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    paddingHorizontal: 50,
+    borderRadius: 50,
   },
   uploadText: {
     color: 'black',

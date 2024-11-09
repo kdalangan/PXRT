@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f2f2f2',
     paddingHorizontal: 20,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',  // Changed from 'space-between' to 'flex-start' to allow space at the top
   },
   header: {
     flexDirection: 'row',
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
   imagePreviewContainer: {
     alignItems: 'center',
-    marginTop: 40,
-    marginBottom: 20,
+    marginTop: 200,  
+    marginBottom: 40, 
   },
   imagePreviewText: {
     fontSize: 18,
@@ -122,20 +122,24 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: 'center',
     marginBottom: 20,
+    position: 'absolute',
+    bottom: 40,  // Position footer above the bottom nav
+    left: 0,
+    right: 0,
+    zIndex: 2,
   },
   footerText: {
     fontSize: 12,
     color: 'gray',
-    marginBottom: 10,
+    marginBottom: 50,
   },
   viewResultsButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#D3D3D3',
+    backgroundColor: '#575757',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
-    marginTop: 150,
+    borderRadius: 50,
   },
   viewResultsText: {
     marginLeft: 10,
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingVertical: 1, // Reduced padding to give more space for buttons above
+    paddingVertical: 1, 
     backgroundColor: '#e0e0e0',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -153,11 +157,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 1, // Ensure it's layered below the footer
+    zIndex: 1,
   },
   navButton: {
     alignItems: 'center',
-    marginBottom: 200, // Adjusted to move the button upwards
+    marginBottom: 200, 
   },
   navButtonText: {
     marginTop: 5,

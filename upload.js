@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ProgressBarAndroid } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ProgressBarAndroid } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function PCBAnalyzerScreen() {
   const [progress, setProgress] = useState(0.5); // Mock progress value
+  const [imageUri, setImageUri] = useState(null); // State to store captured image URI
   const navigation = useNavigation(); // Initialize navigation
 
   // Handle back button press
   const handleBack = () => {
     navigation.goBack(); // Go back to the previous screen
+  };
+
+  // Function to simulate image capture (can be replaced with actual camera logic)
+  const handleCapture = () => {
+    // Replace this with actual image capture logic
+    setImageUri('https://example.com/your-image.jpg'); // Example image URI
   };
 
   return (
@@ -29,7 +36,11 @@ export default function PCBAnalyzerScreen() {
 
       {/* Image Preview Section */}
       <View style={styles.imagePreviewContainer}>
-        <Text style={styles.imagePreviewText}>Image Preview</Text>
+        {imageUri ? (
+          <Image source={{ uri: imageUri }} style={styles.imagePreview} />
+        ) : (
+          <Text style={styles.imagePreviewText}>No image captured</Text>
+        )}
         <ProgressBarAndroid 
           styleAttr="Horizontal" 
           indeterminate={false} 
@@ -40,7 +51,7 @@ export default function PCBAnalyzerScreen() {
         <Text style={styles.progressText}>Analyzing... {Math.round(progress * 100)}%</Text>
       </View>
 
-      {/* Footer Section (above Bottom Navigation) */}
+      {/* Footer Section */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>Ensure the PCB image is clear for accurate error detection</Text>
         <View style={styles.viewResultsButton}>
@@ -59,7 +70,7 @@ export default function PCBAnalyzerScreen() {
 
         {/* Center - Capture Image */}
         <View style={styles.captureContainer}>
-          <TouchableOpacity style={styles.captureButton}>
+          <TouchableOpacity style={styles.captureButton} onPress={handleCapture}>
             <FontAwesome name="camera" size={60} color="black" />
           </TouchableOpacity>
           <Text style={styles.captureButtonText}>Capture Image</Text>
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f2f2f2',
     paddingHorizontal: 20,
-    justifyContent: 'flex-start',  // Changed from 'space-between' to 'flex-start' to allow space at the top
+    justifyContent: 'flex-start',
   },
   header: {
     flexDirection: 'row',
@@ -102,28 +113,38 @@ const styles = StyleSheet.create({
   },
   imagePreviewContainer: {
     alignItems: 'center',
-    marginTop: 200,  
-    marginBottom: 40, 
+    marginTop: 200,
+    marginBottom: 40,
+    width: '100%', 
   },
   imagePreviewText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'gray',
   },
+  imagePreview: {
+    width: 300,
+    height: 200,
+    marginBottom: 10,
+    borderRadius: 10,
+    resizeMode: 'contain',
+  },
   progressBar: {
     width: '80%',
     height: 10,
     marginTop: 10,
+    alignSelf: 'center', 
   },
   progressText: {
     marginTop: 5,
     color: 'gray',
+    textAlign: 'center', 
   },
   footer: {
     alignItems: 'center',
     marginBottom: 20,
     position: 'absolute',
-    bottom: 40,  // Position footer above the bottom nav
+    bottom: 40,
     left: 0,
     right: 0,
     zIndex: 2,

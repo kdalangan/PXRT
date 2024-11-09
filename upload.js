@@ -4,13 +4,12 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function PCBAnalyzerScreen() {
-  const [progress, setProgress] = useState(0.5); // Mock progress value
-  const [imageUri, setImageUri] = useState(null); // State to store captured image URI
-  const navigation = useNavigation(); // Initialize navigation
+  const [progress, setProgress] = useState(0.5); 
+  const [imageUri, setImageUri] = useState(null); 
+  const navigation = useNavigation(); 
 
-  // Handle back button press
   const handleBack = () => {
-    navigation.goBack(); // Go back to the previous screen
+    navigation.goBack(); 
   };
 
   // Function to simulate image capture (can be replaced with actual camera logic)
@@ -54,9 +53,14 @@ export default function PCBAnalyzerScreen() {
       {/* Footer Section */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>Ensure the PCB image is clear for accurate error detection</Text>
-        <View style={styles.viewResultsButton}>
-          <FontAwesome name="cloud-upload" size={24} color="black" />
-          <Text style={styles.viewResultsText}>View Results</Text>
+        <View style={styles.viewResultsButtonsContainer}>
+          {/* View Results Button with White Container */}
+          <TouchableOpacity style={[styles.viewResultsButton, styles.viewResultsButtonContainer]}>
+            <View style={styles.whiteContainer}>
+              <FontAwesome name="cloud-upload" size={24} color="black" />
+              <Text style={styles.viewResultsText}>View Results</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -154,17 +158,35 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginBottom: 50,
   },
+  viewResultsButtonsContainer: {
+    alignItems: 'center', 
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: -30,
+  },
   viewResultsButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#575757',
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 50,
   },
+  viewResultsButtonContainer: {
+    backgroundColor: '#575757', 
+  },
+  whiteContainer: {
+    backgroundColor: '#e0e0e0',
+    paddingVertical: 10, 
+    paddingHorizontal: 25, 
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row', 
+  },
   viewResultsText: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 16,
+    textAlign: 'center',
   },
   bottomNav: {
     flexDirection: 'row',

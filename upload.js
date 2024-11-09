@@ -57,13 +57,13 @@ export default function PCBAnalyzerScreen() {
           {/* View Results Button with White Container */}
           <TouchableOpacity style={[styles.viewResultsButton, styles.viewResultsButtonContainer]}>
             <View style={styles.whiteContainer}>
-              <FontAwesome name="cloud-upload" size={24} color="black" />
+              <FontAwesome name="view" size={24} color="black" />
               <Text style={styles.viewResultsText}>View Results</Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
-
+  
       {/* Bottom Navigation Section */}
       <View style={styles.bottomNav}>
         {/* Left - Upload Image */}
